@@ -1,0 +1,77 @@
+<ng-container *ngIf="alert">
+<div class="container mt-2">
+  <ngb-alert >
+   Suceessfully added
+  </ngb-alert>
+</div>
+</ng-container>
+
+<ng-container *ngIf="loading==false">
+<div class="container">
+  <div class="d-flex" style="justify-content: space-between;">
+ <input
+ type="text"
+ style="padding:1px 10px;margin:20px 0px;width:30%;"
+ placeholder="Search here..."
+ (keyup)="updateFilter($event)"
+/><button class="btn btn-primary text-right m-4" (click)="open(content)">Add Manufacturer</button></div>
+<ngx-datatable class="bootstrap" #myFilterTable #myTable  [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" 
+  [rowHeight]="50" [scrollbarV]="false"  [limit]="10" [sorts]="[{prop: 'name', dir: 'desc'}] ">
+
+  <ngx-datatable-column name="Manufacturer Id"  prop="manufacturerId">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.manufacturerId}}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Manufacturer Name">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.manufacturerName}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Description">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.description}}
+    </ng-template>
+  </ngx-datatable-column>
+
+
+</ngx-datatable>
+
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Manufacturer</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>
+          Manufacturer Name:
+          <input formControlName="manufactureName" class="form-control" placeholder="Enter manufacturerName"  >
+        </label>
+       
+      </div>
+      
+      <div class="form-group mt-2">
+        <label>
+          Description:
+          <input formControlName="description" class="form-control" placeholder="Enter Description">
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary mt-4" (click)="modal.dismiss('Cross click')">Send</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+  
+  </div>
+</ng-template>
+</ng-container>
+<ng-container *ngIf="loading">
+<div class="d-flex justify-content-center loader">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921">
+</div>
+</ng-container>
+
